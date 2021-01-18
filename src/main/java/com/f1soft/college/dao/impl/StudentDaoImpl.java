@@ -73,7 +73,12 @@ public class StudentDaoImpl implements StudentDao {
 
     @Override
     public void delete(Student student) {
-        em.remove(student);
+        if (em.contains(student)) {
+            em.remove(student);
+        } else {
+            em.remove(em.getReference(Student.class, student.getId()));
+        }
+
     }
 
     @Override
