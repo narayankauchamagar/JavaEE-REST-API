@@ -38,11 +38,8 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public void delete(Long id) {
-       Optional<Student>  student = studentDao.findById(id);
-       if(student.isPresent()) {
-           studentDao.delete(student.get());
-       }
+    public void delete(Student student) {
+        studentDao.delete(student);
     }
 
 }

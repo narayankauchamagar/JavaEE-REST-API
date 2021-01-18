@@ -31,7 +31,7 @@ public class StudentController {
     }
 
     @GET
-    @Path("{id}")
+    @Path("{id: [0-9]* }")
     public Response getStudentById(@PathParam("id") Long id){
         Optional<Student> student  = studentService.findById(id) ;
         if(student.isPresent()){
@@ -42,10 +42,21 @@ public class StudentController {
     }
 
     @PUT
-    @Path("{id}")
+    @Path("{id: [0-9]* }")
     public Response updateStudentById(@PathParam("id") Long id, @Valid Student student){
         if(studentService.findById(id).isPresent()){
             return Response.ok(studentService.saveOrUpdate(student)).build();
+        }
+        throw new ResourceNotFoundException("No such Student found");
+    }
+
+    @DELETE
+    @Path("{id: [0-9]*}")
+    public Response deleteStudentById(@PathParam("id") Long id) {
+        Optional<Student> studentOptional = studentService.findById(id);
+        if(studentOptional.isPresent()){
+            studentService.delete(studentOptional.get());
+            return Response.ok().build();
         }
         throw new ResourceNotFoundException("No such Student found");
     }

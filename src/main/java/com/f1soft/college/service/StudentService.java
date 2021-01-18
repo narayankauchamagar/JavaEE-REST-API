@@ -11,5 +11,5 @@ public interface StudentService {
     Optional<Student> findById(Long id );
     Optional<Student> findByName(String name);
     Student saveOrUpdate(Student student);
-    void delete(Long id);
+    void delete(Student student);
 }
